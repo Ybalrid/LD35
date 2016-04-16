@@ -4,37 +4,51 @@ using System;
 
 public class HeroGameplay : MonoBehaviour
 {
-    //Define the "mode" enumeration
+    public bool debugGUI;
+    public bool GO;
+
+    ///Define the "mode" enumeration
     public enum mode { BOOST, SHOOT };
 
     //Hold the current player mode
     public mode playerMode;
+    public float eulerY;
 
+
+    //Ratio between Mouse mouvement and Hero mouvement
+    public float mouseFactor;
+
+    //Rotation speed 
+    public float rotateSpeed;
+
+    /// <summary>
+    /// The orientation in BOOST mode
+    /// </summary>
     private Quaternion BoostBaseOrient;
+
+    /// <summary>
+    /// The orientation in Shoot mode
+    /// </summary>
     private Quaternion ShootBaseOrient;
 
 
-
-
-    public bool cursorHide;
-
-
-    private Vector2 mouse, mouseAbs;
-    public float mouseFactor;
+    /// <summary>
+    /// Holds mouse movement data  
+    /// </summary>
+    private Vector2 mouse;
 
     // Use this for initialization
     void Start()
     {
         playerMode = mode.BOOST;
-        BoostBaseOrient = new Quaternion();
-        ShootBaseOrient = new Quaternion();
-        BoostBaseOrient.SetEulerAngles(Mathf.PI / 2, 0, 0);
+        BoostBaseOrient = transform.rotation;
+        ShootBaseOrient = Quaternion.Euler(-90, 0, 0) * BoostBaseOrient;
 
         //set the cusor parameters
-        Cursor.visible = cursorHide;
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        mouseAbs = new Vector2(0, 0);
+        eulerY = 0;
     }
 
     // Update is called once per frame
@@ -56,8 +70,10 @@ public class HeroGameplay : MonoBehaviour
         //Get the last mouse movement and update mouse absolute position from it from it
         mouse.x = Input.GetAxis("Mouse X");
         mouse.y = Input.GetAxis("Mouse Y");
-        mouseAbs += mouse;
-        Debug.Log("mouse : " + mouseAbs);
+        
+        //Debug.Log("mouse : " + mouseAbs);
+        rotateYaw(Input.GetAxis("Horizontal"));
+
     }
 
     /// <summary>
@@ -65,12 +81,10 @@ public class HeroGameplay : MonoBehaviour
     /// </summary>
     private void setPositionFromMouse()
     {
-        Vector3 heroPosition = transform.position;
-        heroPosition.x = mouseAbs.x * mouseFactor;
-        heroPosition.y = mouseAbs.y * mouseFactor;
-        transform.position = heroPosition;
+        
+        if (playerMode == mode.SHOOT) mouse.y = 0;
+        transform.Translate( new Vector3(mouse.x * mouseFactor, mouse.y * mouseFactor, 0));
     }
-
 
     /// <summary>
     /// Switch the current hero mode. Should play an animation. No idea how to do that, tho... :D
@@ -96,17 +110,35 @@ public class HeroGameplay : MonoBehaviour
     /// </summary>
     private void setBaseOrientation()
     {
- 
+        Quaternion gameplayOrient = Quaternion.Euler(0, eulerY, 0);
+        Quaternion gameplayShootOrient = Quaternion.Euler(0, 0, eulerY);
+
         switch (playerMode)
         {
             case mode.BOOST:
                 //Debug.Log("HERO BOOST MODE");
-                transform.rotation = BoostBaseOrient;
+                transform.rotation = BoostBaseOrient * gameplayOrient;
                 break;
             case mode.SHOOT:
                 //Debug.Log("HERO SHOOT MODE");
-                transform.rotation = ShootBaseOrient;
+                transform.rotation = BoostBaseOrient * gameplayOrient;
+                transform.Rotate(-90, 0, 0);
                 break;
         }
+    }
+
+    private void rotateYaw(float axis)
+    {
+        eulerY += rotateSpeed * Time.deltaTime * axis;
+    }
+
+
+    void OnGUI()
+    {
+        string debugInfo = "EulerY : " + eulerY + "\n";
+        debugInfo += "Mode : " + (int) playerMode;
+        if (!debugGUI) return;
+        GUI.Box(new Rect(0, 0, 100, 100), "Debug info");
+        GUI.TextArea(new Rect(10, 10, 90, 90), debugInfo);
     }
 }
