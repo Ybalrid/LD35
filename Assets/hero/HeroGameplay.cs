@@ -41,6 +41,7 @@ public class HeroGameplay : MonoBehaviour
     void Update()
     {
         getUserInputs();
+        setBaseOrientation();
         setPositionFromMouse();
     }
 
@@ -70,6 +71,10 @@ public class HeroGameplay : MonoBehaviour
         transform.position = heroPosition;
     }
 
+
+    /// <summary>
+    /// Switch the current hero mode. Should play an animation. No idea how to do that, tho... :D
+    /// </summary>
     private void SwitchMode()
     {
         if (playerMode == mode.BOOST)
@@ -78,11 +83,17 @@ public class HeroGameplay : MonoBehaviour
             playerMode = mode.BOOST;
     }
 
+    /// <summary>
+    /// If in shoot mode, shoot.
+    /// </summary>
     private void shoot()
     {
         if (playerMode != mode.SHOOT) return;
     }
 
+    /// <summary>
+    /// Switch the orientation of the player between the two modes. 
+    /// </summary>
     private void setBaseOrientation()
     {
  
