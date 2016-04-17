@@ -4,7 +4,7 @@ using System.Collections;
 public class HeroCameraControll : MonoBehaviour {
 
     public Camera thirdPersonCamera;
-
+    public bool doNothing;
     public float dampingPos;
     public float dampingOrient;
 
@@ -26,14 +26,23 @@ public class HeroCameraControll : MonoBehaviour {
 	}
 
     void LateUpdate () {
+        if (doNothing) return;
         //Stay behind Hero
-        float angle = Mathf.LerpAngle(thirdPersonCamera.transform.eulerAngles.y, transform.eulerAngles.y, Time.deltaTime * dampingOrient);
+        float y = transform.eulerAngles.y;
+     //   Debug.Log("Y : " + y);
+        float angle = Mathf.LerpAngle(thirdPersonCamera.transform.eulerAngles.y, y, Time.deltaTime * dampingOrient);
+    //    Debug.Log("Angle : " + angle);
+
+        //if (transform.rotation.eulerAngles.z == 180) angle += 180;
         Quaternion rotation = Quaternion.Euler(0, angle, 0);
+     //   Debug.Log("Rotation (euler) : " + rotation.eulerAngles);
+
+   
 
         Vector3 currentPosition = thirdPersonCamera.transform.position;
         Vector3 directPosition = transform.position - (rotation * cameraOffset);
 
-
+     //   Debug.Log(directPosition.z);
 
         thirdPersonCamera.transform.position = Vector3.Lerp(currentPosition, directPosition, Time.deltaTime * dampingPos);
         //Look at the hero

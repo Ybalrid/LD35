@@ -6,12 +6,74 @@ ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: HeroShip
+    100004: HeroShip_001
+    100006: Cube
+    100008: Cube_001
+    100010: HeroShip_leg
+    100012: Armature
+    100014: Bone
+    100016: Bone_001
+    100018: Bone_002
+    100020: Bone_003
+    100022: Bone_004
+    100024: Bone_005
+    100026: Bone_006
+    100028: Bone_007
+    100030: Center
+    100032: head
+    100034: LeftArm
+    100036: LeftHand
+    100038: Legs
+    100040: RightArm
+    100042: RightHand
     400000: //RootNode
+    400002: HeroShip
+    400004: HeroShip_001
+    400006: Cube
+    400008: Cube_001
+    400010: HeroShip_leg
+    400012: Armature
+    400014: Bone
+    400016: Bone_001
+    400018: Bone_002
+    400020: Bone_003
+    400022: Bone_004
+    400024: Bone_005
+    400026: Bone_006
+    400028: Bone_007
+    400030: Center
+    400032: head
+    400034: LeftArm
+    400036: LeftHand
+    400038: Legs
+    400040: RightArm
+    400042: RightHand
     2300000: //RootNode
+    2300002: HeroShip
+    2300004: HeroShip_001
+    2300006: Cube
+    2300008: Cube_001
+    2300010: HeroShip_leg
     3300000: //RootNode
+    3300002: HeroShip
+    3300004: HeroShip_001
+    3300006: Cube
+    3300008: Cube_001
+    3300010: HeroShip_leg
     4300000: HeroShip
-    7400000: Default Take
+    4300002: HeroShip_001
+    4300004: Cube
+    4300006: Cube_001
+    4300008: HeroShip_leg
+    7400000: Shift
+    7400002: Default Take
+    7400004: Idle
+    7400006: SiftBoost
+    7400008: DeShiftBoost
+    7400010: ShiftedIdle
     9500000: //RootNode
+    13700000: Cube
   materials:
     importMaterials: 1
     materialName: 0
@@ -26,13 +88,253 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Default Take
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Center
+        weight: 1
+      - path: Armature/Center/Legs
+        weight: 1
+      - path: Armature/head
+        weight: 1
+      - path: Armature/LeftArm
+        weight: 1
+      - path: Armature/LeftArm/LeftHand
+        weight: 1
+      - path: Armature/RightArm
+        weight: 1
+      - path: Armature/RightArm/RightHand
+        weight: 1
+      - path: Cube
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: DeShiftBoost
+      takeName: DeShiftBoost
+      firstFrame: 0
+      lastFrame: 23
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Center
+        weight: 1
+      - path: Armature/Center/Legs
+        weight: 1
+      - path: Armature/head
+        weight: 1
+      - path: Armature/LeftArm
+        weight: 1
+      - path: Armature/LeftArm/LeftHand
+        weight: 1
+      - path: Armature/RightArm
+        weight: 1
+      - path: Armature/RightArm/RightHand
+        weight: 1
+      - path: Cube
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Idle
+      takeName: Idle
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Center
+        weight: 1
+      - path: Armature/Center/Legs
+        weight: 1
+      - path: Armature/head
+        weight: 1
+      - path: Armature/LeftArm
+        weight: 1
+      - path: Armature/LeftArm/LeftHand
+        weight: 1
+      - path: Armature/RightArm
+        weight: 1
+      - path: Armature/RightArm/RightHand
+        weight: 1
+      - path: Cube
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ShiftedIdle
+      takeName: ShiftedIdle
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Center
+        weight: 1
+      - path: Armature/Center/Legs
+        weight: 1
+      - path: Armature/head
+        weight: 1
+      - path: Armature/LeftArm
+        weight: 1
+      - path: Armature/LeftArm/LeftHand
+        weight: 1
+      - path: Armature/RightArm
+        weight: 1
+      - path: Armature/RightArm/RightHand
+        weight: 1
+      - path: Cube
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: SiftBoost
+      takeName: SiftBoost
+      firstFrame: 0
+      lastFrame: 37
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Center
+        weight: 1
+      - path: Armature/Center/Legs
+        weight: 1
+      - path: Armature/head
+        weight: 1
+      - path: Armature/LeftArm
+        weight: 1
+      - path: Armature/LeftArm/LeftHand
+        weight: 1
+      - path: Armature/RightArm
+        weight: 1
+      - path: Armature/RightArm/RightHand
+        weight: 1
+      - path: Cube
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

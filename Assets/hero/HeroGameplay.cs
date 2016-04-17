@@ -4,8 +4,12 @@ using System;
 
 public class HeroGameplay : MonoBehaviour
 {
+    public Rigidbody Bullet;
+    public bool resetPitch;
     public bool debugGUI;
     public bool GO;
+    public float speed;
+    public float bulletSpeed;
 
     ///Define the "mode" enumeration
     public enum mode { BOOST, SHOOT };
@@ -13,7 +17,9 @@ public class HeroGameplay : MonoBehaviour
     //Hold the current player mode
     public mode playerMode;
     public float eulerY;
+    public float eulerP;
 
+    public Vector3 BulletSpawnOffset;
 
     //Ratio between Mouse mouvement and Hero mouvement
     public float mouseFactor;
@@ -36,11 +42,18 @@ public class HeroGameplay : MonoBehaviour
     /// Holds mouse movement data  
     /// </summary>
     private Vector2 mouse;
+    private float lastShootTime;
+    public float shootRate;
+
+    Animator anim;
+
 
     // Use this for initialization
     void Start()
     {
-        playerMode = mode.BOOST;
+        anim = GetComponent<Animator>();
+
+       // playerMode = mode.BOOST;
         BoostBaseOrient = transform.rotation;
         ShootBaseOrient = Quaternion.Euler(-90, 0, 0) * BoostBaseOrient;
 
@@ -49,6 +62,7 @@ public class HeroGameplay : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         eulerY = 0;
+
     }
 
     // Update is called once per frame
@@ -57,6 +71,20 @@ public class HeroGameplay : MonoBehaviour
         getUserInputs();
         setBaseOrientation();
         setPositionFromMouse();
+        if(playerMode == mode.SHOOT)
+            applyHoverOscilations();
+        else
+            goFowrard();
+    }
+
+    private void goFowrard()
+    {
+        transform.Translate(new Vector3(0, 0, speed * Time.deltaTime));
+    }
+
+    private void applyHoverOscilations()
+    {
+        transform.position += new Vector3(0, 0.0125f* Mathf.Cos(3*Time.realtimeSinceStartup), 0);
     }
 
     /// <summary>
@@ -65,7 +93,7 @@ public class HeroGameplay : MonoBehaviour
     private void getUserInputs()
     {
         //If player press space, change the mode 
-        if (Input.GetKeyDown("space")) SwitchMode();
+        if (Input.GetKeyDown("space") || Input.GetKeyUp("space")) SwitchMode();
 
         //Get the last mouse movement and update mouse absolute position from it from it
         mouse.x = Input.GetAxis("Mouse X");
@@ -73,6 +101,9 @@ public class HeroGameplay : MonoBehaviour
         
         //Debug.Log("mouse : " + mouseAbs);
         rotateYaw(Input.GetAxis("Horizontal"));
+        rotatePitch(Input.GetAxis("Vertical"));
+
+        if (Input.GetMouseButton(0)) shoot();
 
     }
 
@@ -81,9 +112,17 @@ public class HeroGameplay : MonoBehaviour
     /// </summary>
     private void setPositionFromMouse()
     {
-        
-        if (playerMode == mode.SHOOT) mouse.y = 0;
-        transform.Translate( new Vector3(mouse.x * mouseFactor, mouse.y * mouseFactor, 0));
+
+        if (playerMode == mode.SHOOT)
+        {
+            rotateYaw(mouse.x);
+            rotatePitch(mouse.y);
+        }
+        else
+        {
+            transform.Translate(new Vector3(mouse.x * mouseFactor, mouse.y * mouseFactor, 0));
+        }
+
     }
 
     /// <summary>
@@ -91,10 +130,26 @@ public class HeroGameplay : MonoBehaviour
     /// </summary>
     private void SwitchMode()
     {
+
         if (playerMode == mode.BOOST)
+        {
             playerMode = mode.SHOOT;
+            anim.SetBool("doTheShift", true);
+            anim.SetBool("doTheDeshift", false);
+        }
         else
+        {
             playerMode = mode.BOOST;
+            anim.SetBool("doTheShift", false);
+            anim.SetBool("doTheDeshift", true);
+        }
+        if (resetPitch)
+            resetEulerPitch();
+    }
+
+    private void resetEulerPitch()
+    {
+        eulerP = 0;
     }
 
     /// <summary>
@@ -103,6 +158,15 @@ public class HeroGameplay : MonoBehaviour
     private void shoot()
     {
         if (playerMode != mode.SHOOT) return;
+        if (Time.realtimeSinceStartup - lastShootTime >= shootRate)
+        {
+            BulletSpawnOffset.x = -BulletSpawnOffset.x;
+            Debug.Log("Shoot !!");
+            lastShootTime = Time.realtimeSinceStartup;
+            Rigidbody bulletInstance =  Instantiate(Bullet, transform.position + transform.rotation * BulletSpawnOffset, new Quaternion()) as Rigidbody;
+            bulletInstance.velocity = (transform.rotation * new Vector3(0, 0, 1) * bulletSpeed);
+     
+        }
     }
 
     /// <summary>
@@ -111,18 +175,19 @@ public class HeroGameplay : MonoBehaviour
     private void setBaseOrientation()
     {
         Quaternion gameplayOrient = Quaternion.Euler(0, eulerY, 0);
-        Quaternion gameplayShootOrient = Quaternion.Euler(0, 0, eulerY);
 
         switch (playerMode)
         {
             case mode.BOOST:
                 //Debug.Log("HERO BOOST MODE");
                 transform.rotation = BoostBaseOrient * gameplayOrient;
+                transform.Rotate(eulerP, 0, 0);
                 break;
             case mode.SHOOT:
                 //Debug.Log("HERO SHOOT MODE");
+
                 transform.rotation = BoostBaseOrient * gameplayOrient;
-                transform.Rotate(-90, 0, 0);
+                transform.Rotate(eulerP, 0, 0);
                 break;
         }
     }
@@ -130,12 +195,22 @@ public class HeroGameplay : MonoBehaviour
     private void rotateYaw(float axis)
     {
         eulerY += rotateSpeed * Time.deltaTime * axis;
+
+    }
+    private void rotatePitch(float axis)
+    {
+        eulerP += rotateSpeed * Time.deltaTime * -axis;
+
+        //Clamp value to [-90:90]
+        if (eulerP <= -90) eulerP = -90;
+        if (eulerP >= 90) eulerP = 90;
     }
 
 
     void OnGUI()
     {
         string debugInfo = "EulerY : " + eulerY + "\n";
+        debugInfo += "EulerP : " + eulerP + "\n";
         debugInfo += "Mode : " + (int) playerMode;
         if (!debugGUI) return;
         GUI.Box(new Rect(0, 0, 100, 100), "Debug info");
