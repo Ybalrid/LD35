@@ -16,8 +16,8 @@ public class DieOnBeingShot : MonoBehaviour {
 	}
     void OnCollisionEnter(Collision col)
     {
-
-        if (col.gameObject.tag == "HeroBullet") ;
+        
+        if (col.gameObject.tag == "HeroBullet") 
         if (--life >= 0)
             Destroy(gameObject);
     }

@@ -45,7 +45,14 @@ public class HeroGameplay : MonoBehaviour
     private float lastShootTime;
     public float shootRate;
 
+    //Animation code
     Animator anim;
+    int doTheShiftHash;
+    int doTheDeShiftHash;
+
+    public int life;
+
+
 
 
     // Use this for initialization
@@ -53,7 +60,7 @@ public class HeroGameplay : MonoBehaviour
     {
         anim = GetComponent<Animator>();
 
-       // playerMode = mode.BOOST;
+        // playerMode = mode.BOOST;
         BoostBaseOrient = transform.rotation;
         ShootBaseOrient = Quaternion.Euler(-90, 0, 0) * BoostBaseOrient;
 
@@ -62,7 +69,8 @@ public class HeroGameplay : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         eulerY = 0;
-
+        doTheShiftHash = Animator.StringToHash("doTheShift");
+        doTheDeShiftHash = Animator.StringToHash("doTheDeshift");
     }
 
     // Update is called once per frame
@@ -71,10 +79,12 @@ public class HeroGameplay : MonoBehaviour
         getUserInputs();
         setBaseOrientation();
         setPositionFromMouse();
-        if(playerMode == mode.SHOOT)
+        if (playerMode == mode.SHOOT)
             applyHoverOscilations();
         else
             goFowrard();
+
+        StaticLevel.HeroPosition = transform.position;
     }
 
     private void goFowrard()
@@ -84,7 +94,7 @@ public class HeroGameplay : MonoBehaviour
 
     private void applyHoverOscilations()
     {
-        transform.position += new Vector3(0, 0.0125f* Mathf.Cos(3*Time.realtimeSinceStartup), 0);
+        transform.position += new Vector3(0, 0.0125f * Mathf.Cos(3 * Time.realtimeSinceStartup), 0);
     }
 
     /// <summary>
@@ -98,10 +108,10 @@ public class HeroGameplay : MonoBehaviour
         //Get the last mouse movement and update mouse absolute position from it from it
         mouse.x = Input.GetAxis("Mouse X");
         mouse.y = Input.GetAxis("Mouse Y");
-        
+
         //Debug.Log("mouse : " + mouseAbs);
         rotateYaw(Input.GetAxis("Horizontal"));
-        rotatePitch(Input.GetAxis("Vertical"));
+        rotatePitch(-Input.GetAxis("Vertical"));
 
         if (Input.GetMouseButton(0)) shoot();
 
@@ -134,14 +144,14 @@ public class HeroGameplay : MonoBehaviour
         if (playerMode == mode.BOOST)
         {
             playerMode = mode.SHOOT;
-            anim.SetBool("doTheShift", true);
-            anim.SetBool("doTheDeshift", false);
+            anim.SetBool(doTheShiftHash, true);
+            anim.SetBool(doTheDeShiftHash, false);
         }
         else
         {
             playerMode = mode.BOOST;
-            anim.SetBool("doTheShift", false);
-            anim.SetBool("doTheDeshift", true);
+            anim.SetBool(doTheShiftHash, false);
+            anim.SetBool(doTheDeShiftHash, true);
         }
         if (resetPitch)
             resetEulerPitch();
@@ -163,9 +173,9 @@ public class HeroGameplay : MonoBehaviour
             BulletSpawnOffset.x = -BulletSpawnOffset.x;
             Debug.Log("Shoot !!");
             lastShootTime = Time.realtimeSinceStartup;
-            Rigidbody bulletInstance =  Instantiate(Bullet, transform.position + transform.rotation * BulletSpawnOffset, new Quaternion()) as Rigidbody;
+            Rigidbody bulletInstance = Instantiate(Bullet, transform.position + transform.rotation * BulletSpawnOffset, new Quaternion()) as Rigidbody;
             bulletInstance.velocity = (transform.rotation * new Vector3(0, 0, 1) * bulletSpeed);
-     
+
         }
     }
 
@@ -211,9 +221,27 @@ public class HeroGameplay : MonoBehaviour
     {
         string debugInfo = "EulerY : " + eulerY + "\n";
         debugInfo += "EulerP : " + eulerP + "\n";
-        debugInfo += "Mode : " + (int) playerMode;
+        debugInfo += "Mode : " + (int)playerMode;
         if (!debugGUI) return;
         GUI.Box(new Rect(0, 0, 100, 100), "Debug info");
         GUI.TextArea(new Rect(10, 10, 90, 90), debugInfo);
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        Debug.Log("Detected collision");
+        if (col.gameObject.tag == "EnemyBullet")
+        {
+            if (--life <= 0)
+                Destroy(gameObject);
+        }
+
+        if (col.gameObject.tag == "ShootTarget")
+            Destroy(gameObject);
+    }
+
+    void OnDestroy()
+    {
+        Application.LoadLevel("GameOver");
     }
 }
