@@ -23,6 +23,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 485252}
+  - 136: {fileID: 13668878}
   m_Layer: 0
   m_Name: LeftArm
   m_TagString: Untagged
@@ -38,6 +39,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 426400}
+  - 135: {fileID: 13505526}
   m_Layer: 0
   m_Name: Legs
   m_TagString: Untagged
@@ -69,6 +71,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 450620}
+  - 136: {fileID: 13619424}
   m_Layer: 0
   m_Name: LeftHand
   m_TagString: Untagged
@@ -84,6 +87,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 475446}
+  - 136: {fileID: 13684616}
   m_Layer: 0
   m_Name: RightHand
   m_TagString: Untagged
@@ -114,6 +118,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 406276}
+  - 135: {fileID: 13511500}
   m_Layer: 0
   m_Name: Center
   m_TagString: Untagged
@@ -129,6 +134,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 445266}
+  - 136: {fileID: 13641494}
   m_Layer: 0
   m_Name: RightArm
   m_TagString: Untagged
@@ -147,6 +153,8 @@ GameObject:
   - 95: {fileID: 9517812}
   - 114: {fileID: 11467604}
   - 114: {fileID: 11406384}
+  - 54: {fileID: 5496440}
+  - 65: {fileID: 6500992}
   m_Layer: 0
   m_Name: HeroPrefab
   m_TagString: Untagged
@@ -276,13 +284,40 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 190924}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.55, z: -80.03}
+  m_LocalPosition: {x: 0, y: -86.1, z: -80.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 435704}
   - {fileID: 487772}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!54 &5496440
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190924}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &6500992
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190924}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0, z: -0.5}
 --- !u!95 &9517812
 Animator:
   serializedVersion: 3
@@ -328,8 +363,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bullet: {fileID: 5475416, guid: ac95ee3112a843b48a0eb2878d75fc53, type: 2}
   resetPitch: 0
-  debugGUI: 1
-  GO: 1
+  debugGUI: 0
+  GO: 0
   speed: 30
   bulletSpeed: 100
   playerMode: 0
@@ -340,6 +375,82 @@ MonoBehaviour:
   rotateSpeed: 250
   shootRate: 0.125
   life: 100
+--- !u!135 &13505526
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144516}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: -1, y: 0, z: 0}
+--- !u!135 &13511500
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184404}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: -1, y: 0, z: 0}
+--- !u!136 &13619424
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170296}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 3
+  m_Direction: 0
+  m_Center: {x: -1, y: 0, z: 0}
+--- !u!136 &13641494
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 186206}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.5
+  m_Direction: 0
+  m_Center: {x: -1, y: 0, z: 0}
+--- !u!136 &13668878
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 115946}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.5
+  m_Direction: 0
+  m_Center: {x: -1, y: 0, z: 0}
+--- !u!136 &13684616
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170404}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 3
+  m_Direction: 0
+  m_Center: {x: -1, y: 0, z: 0}
 --- !u!137 &13772946
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

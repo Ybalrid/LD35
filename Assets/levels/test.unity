@@ -865,6 +865,14 @@ Prefab:
       propertyPath: playerMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11467604, guid: 797f1c78e07c5f24dac308cf3fbf6d7c, type: 2}
+      propertyPath: debugGUI
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467604, guid: 797f1c78e07c5f24dac308cf3fbf6d7c, type: 2}
+      propertyPath: GO
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 797f1c78e07c5f24dac308cf3fbf6d7c, type: 2}
   m_IsPrefabParent: 0
